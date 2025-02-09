@@ -4,10 +4,12 @@
 		"target": "ES2022",
 		"outDir": "out",
 		"lib": [
-			"ES2022", "DOM"
+			"ES2022", "DOM", "DOM.Iterable"
 		],
 		"sourceMap": true,
 		"rootDir": "src",
+		"jsx": "react-jsx",
+		"esModuleInterop": true,
 		
 		"strict": true,   /* enable all strict type-checking options */
 		/* Additional Checks */

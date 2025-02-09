@@ -1,4 +1,3 @@
-
 function App() {
   return (
     <div className="bg-gradient-to-r from-blue-600 to-purple-500 p-10">
