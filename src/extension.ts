@@ -57,8 +57,6 @@ export function activate(context: vscode.ExtensionContext) {
                   text: response,
                 })
               }
-              
-              
   
             } catch (error) {
               panel.webview.postMessage({
