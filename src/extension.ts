@@ -26,7 +26,9 @@ export function activate(context: vscode.ExtensionContext) {
           </head>
           <body>
             <noscript>You need to enable JavaScript to run this app.</noscript>
-            <div id="root"></div>
+            <div id="root" style="
+            width: -webkit-fill-available;
+        "></div>
             <script src="${scriptSrc}"></script>
           </body>
         </html>
@@ -57,6 +59,14 @@ export function activate(context: vscode.ExtensionContext) {
                   text: response,
                 })
               }
+
+              console.log('message ended: ', response)
+
+              // end of chat 
+              panel.webview.postMessage({
+                command: 'chatEnd',
+                text: response,
+              })
   
             } catch (error) {
               panel.webview.postMessage({

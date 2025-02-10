@@ -1,6 +1,6 @@
 import {useEffect, useState} from 'react'
 
-const Input = () => {
+const Input = ({onSend}: {onSend: (text: string) => void}) => {
 	const [text, setText] = useState('')
 	const [vscode, setVscode] = useState(null)
 
@@ -12,11 +12,11 @@ const Input = () => {
 	}, [])
 
 	const sendMessage = () => {
-		console.log('Hello this is funny ', vscode)
 		if (vscode !== null) {
 			vscode.postMessage({command: 'sendMessage', text})
 		}
 		setText('')
+        onSend(text)
 	}
 
 	return (
