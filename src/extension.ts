@@ -1,4 +1,5 @@
 import * as vscode from 'vscode'
+import ollama from 'ollama'
 
 export function activate(context: vscode.ExtensionContext) {
 	let webview = vscode.commands.registerCommand('deepseeker.helloWorld', () => {
@@ -14,6 +15,8 @@ export function activate(context: vscode.ExtensionContext) {
 			vscode.Uri.joinPath(context.extensionUri, 'webview', 'dist', 'assets', 'main.css')
 		)
 
+    console.log('loaded all styles and scripts')
+
 		panel.webview.html =
 			/*html*/
 			`<!DOCTYPE html>
@@ -28,6 +31,46 @@ export function activate(context: vscode.ExtensionContext) {
           </body>
         </html>
         `
+
+        panel.webview.onDidReceiveMessage(async (message: any) => {
+          console.log('message received: ', message)
+          if (message.command === 'sendMessage') {
+            const userPrompt = message.text
+            let response = ''
+  
+            try {
+              const streamResponse = await ollama.chat({
+                model: 'deepseek-r1:1.5b',
+                messages: [
+                  {
+                    role: 'user',
+                    content: userPrompt,
+                  },
+                ],
+                stream: true,
+              })
+  
+              for await (const chunk of streamResponse) {
+                response += chunk.message.content
+                panel.webview.postMessage({
+                  command: 'chatResponse',
+                  text: response,
+                })
+              }
+              
+              
+  
+            } catch (error) {
+              panel.webview.postMessage({
+                command: 'chatResponse',
+                text: 'Error: ' + error,
+              })
+            }
+  
+            
+            vscode.window.showInformationMessage(message.text)
+          }
+        })
 	})
 
 	context.subscriptions.push(webview)
