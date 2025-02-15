@@ -63,10 +63,20 @@ Built with React, Vite, VSCode Webview API using TypeScript
     └── vite.config.ts
 ```
 
-## Development
+## Dev notes
 ### Root
 - ```npm run compile``` builds the extension and F5 to start debugging
 ### Webview
 - /Webview contains the React app that produces the index.js file that is used to inject in the HTML of the VScode webview. 
 - ```npm run build``` compiles the project and sets a watcher on the React project to interactively generate index.js and main.css
+### TODO's:
+#### Visuals
+- Code highlight support 
+- LaTeX support 
+- Various stlyles improvements
+  - Window size fix
+  - Current theme lacks a soul let's build a more insane one
+#### Functionalities
+- Train model to deliver a more specialized set of functionalities than just a regular chatbot
+  - I.e. just be a good css wizards
 
