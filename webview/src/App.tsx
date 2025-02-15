@@ -8,7 +8,7 @@ const App = () => {
 	const [sessionMessages, setSessionMessages] = useState<Message[]>([])
 
 	const handleSend = (newMessage: string) => {
-		setSessionMessages((prevMessages) => [...prevMessages, { text: newMessage, isUser: true }]) // Append message
+		setSessionMessages((prevMessages) => [...prevMessages, { content: newMessage, role: 'user' }]) // Append message
 	}
 
 	// const testCode = () => (
@@ -31,7 +31,7 @@ const App = () => {
 				// console.log('chatEnd event received')
 				// console.log('session rn', sessionMessages)
 				setPrinterMessage('')
-				setSessionMessages((prevMessages) => [...prevMessages, { text: text, isUser: false }])
+				setSessionMessages((prevMessages) => [...prevMessages, { content: text, role: 'system' }])
 			}
 		})
 	}, [])
@@ -46,11 +46,11 @@ const App = () => {
 
 				{/* previous conversations */}
 				{sessionMessages.map((msg: Message, idx) => (
-					<Chat key={idx} message={msg.text} isUser={msg.isUser} />
+					<Chat key={idx} message={msg.content} role={msg.role} />
 				))}
 
 				{/* bot message that's currently loading in chunks */}
-				<Chat message={printerMessage} isUser={false} />
+				<Chat message={printerMessage} role={'system'} />
 			</div>
 			<Input onSend={handleSend} />
 		</div>

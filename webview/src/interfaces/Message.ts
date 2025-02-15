@@ -1,5 +1,6 @@
-
 export interface Message {
-    text: string
-    isUser: boolean
+    role: string;
+    content: string;
+    images?: Uint8Array[] | string[];
+    // tool_calls?: ToolCall[];
 }
