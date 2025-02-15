@@ -1,6 +1,6 @@
-import {useEffect, useState} from 'react'
+import { useEffect, useState } from 'react'
 
-const Input = ({onSend}: {onSend: (text: string) => void}) => {
+const Input = ({ onSend }: { onSend: (text: string) => void }) => {
 	const [text, setText] = useState('')
 	const [vscode, setVscode] = useState(null)
 
@@ -8,15 +8,15 @@ const Input = ({onSend}: {onSend: (text: string) => void}) => {
 
 	useEffect(() => {
 		setVscode(window.acquireVsCodeApi())
-        console.log(vscode)
+		console.log(vscode)
 	}, [])
 
 	const sendMessage = () => {
 		if (vscode !== null) {
-			vscode.postMessage({command: 'sendMessage', text})
+			vscode.postMessage({ command: 'sendMessage', text })
 		}
 		setText('')
-        onSend(text)
+		onSend(text)
 	}
 
 	return (
@@ -31,7 +31,7 @@ const Input = ({onSend}: {onSend: (text: string) => void}) => {
 				onClick={sendMessage}
 				className="bg-blue-500 text-red px-4 py-2 rounded hover:bg-blue-700 transition"
 			>
-				Sned
+				Send
 			</button>
 		</div>
 	)
