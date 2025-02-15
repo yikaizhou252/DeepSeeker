@@ -28,8 +28,8 @@ const App = () => {
 				setPrinterMessage(text)
 			} else if (command === 'chatEnd') {
 				// update session by pushing latest chatbot message
-				console.log('chatEnd event received')
-				console.log('session rn', sessionMessages)
+				// console.log('chatEnd event received')
+				// console.log('session rn', sessionMessages)
 				setPrinterMessage('')
 				setSessionMessages((prevMessages) => [...prevMessages, { text: text, isUser: false }])
 			}
@@ -38,7 +38,7 @@ const App = () => {
 
 	return (
 		<div className="flex flex-col p-4 bg-gray-100 h-screen justify-between">
-			<h2 className="text-lg font-bold text-black mb-2">Deepseeker Chat</h2>
+			<h2 className="text-lg font-bold text-black mb-2 self-center">Deepseeker Chat</h2>
 			<div className="flex flex-col flex-1 space-y-2 p-4 border border-gray-300 rounded bg-white overflow-auto">
 				{/* <SyntaxHighlighter language="python" style={dark}>
 					import os print("Hello, bad World!")
