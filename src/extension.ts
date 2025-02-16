@@ -29,7 +29,7 @@ export function activate(context: vscode.ExtensionContext) {
             <div id="root" style="
             width: -webkit-fill-available;
         "></div>
-            <script src="${scriptSrc}"></script>
+            <script type="module" src="${scriptSrc}"></script>
           </body>
         </html>
         `

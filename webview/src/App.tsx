@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import Chat from './components/Chat'
 import Input from './components/Input'
 import { Message } from './interfaces/Message'
+import ShikiHighlighter, { type Element } from 'react-shiki'
 
 const App = () => {
 	const [printerMessage, setPrinterMessage] = useState('')
@@ -58,6 +59,19 @@ const App = () => {
 
 				{/* bot message that's currently loading in chunks */}
 				<Chat message={printerMessage} role={'assisstant'} />
+				{/* <Chat message={"yoooo this is crazy python code```print('hello')```"} role={'assisstant'} /> */}
+				<ShikiHighlighter
+					language="python"
+					theme="houston"
+					showLanguage={false}
+					addDefaultStyles={true}
+					as="div"
+					style={{
+						textAlign: 'left',
+					}}
+				>
+					{`import os \n\tprint('hello')`}
+				</ShikiHighlighter>
 			</div>
 			<Input onSend={handleSend} />
 		</div>

@@ -14,10 +14,14 @@ export default defineConfig({
         main: 'index.html', // Ensures correct entry point
       },
       output: {
+        format: 'es',  // Ensures that output is in module format
         entryFileNames: 'assets/index.js',  
-        chunkFileNames: 'assets/[name].js', 
-        assetFileNames: 'assets/[name][extname]' 
+        chunkFileNames: 'chunks/[name].js', 
+        // assetFileNames: 'assets/[name][extname]' 
       },
+      watch: {
+        exclude: ['**/dist/chunks/*'] // Exclude certain paths (like static assets) from triggering rebuilds
+      }
     },
   },
 });
