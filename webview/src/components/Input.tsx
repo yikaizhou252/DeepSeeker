@@ -2,15 +2,10 @@ import { useEffect, useState } from 'react'
 
 const Input = ({ onSend }: { onSend: (text: string) => void }) => {
 	const [text, setText] = useState('')
-	const [vscode, setVscode] = useState(null)
 	const [isSubmitDisabled, setIsSubmitDisabled] = useState(false)
 
 	// const vscode = window.acquireVsCodeApi ? window.acquireVsCodeApi() : null
-
 	useEffect(() => {
-		setVscode(window.acquireVsCodeApi())
-		console.debug('Debug: acquired vscode api', vscode)
-
 		window.addEventListener('message', (event) => {
 			const { command } = event.data
 			if (command === 'chatEnd') {
@@ -27,11 +22,8 @@ const Input = ({ onSend }: { onSend: (text: string) => void }) => {
 
 	const sendMessage = () => {
 		setIsSubmitDisabled(true)
-		if (vscode !== null) {
-			vscode.postMessage({ command: 'sendMessage', text })
-		}
-		setText('')
 		onSend(text)
+		setText('')
 	}
 
 	return (

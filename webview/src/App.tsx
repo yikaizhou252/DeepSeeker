@@ -6,32 +6,39 @@ import { Message } from './interfaces/Message'
 const App = () => {
 	const [printerMessage, setPrinterMessage] = useState('')
 	const [sessionMessages, setSessionMessages] = useState<Message[]>([])
+	const [vscode, setVscode] = useState(null)
 
 	const handleSend = (newMessage: string) => {
-		setSessionMessages((prevMessages) => [...prevMessages, { content: newMessage, role: 'user' }]) // Append message
-	}
+		setSessionMessages((prevMessages) => {
+			const messages = [...prevMessages, { content: newMessage, role: 'user' }]
+			if (vscode !== null) {
+				vscode.postMessage({ command: 'sendMessage', messages })
+			}
+			return messages
+		})
 
-	// const testCode = () => (
-	// 	<SyntaxHighlighter language="python" style={dark}>
-	// 		import os print("Hello, World!")
-	// 	</SyntaxHighlighter>
-	// )
+		// console.log('Session messages in react: ', sessionMessages)
+
+		// if (vscode !== null) {
+		// 	console.log('Debug: sending dict to vscode', sessionMessages)
+		// 	vscode.postMessage({ command: 'sendMessage', sessionMessages })
+		// }
+	}
 
 	// TODO
 	//https://react-shiki.vercel.app/ maybe use this
 
 	useEffect(() => {
+		setVscode(window.acquireVsCodeApi())
+		console.debug('Debug: acquired vscode api', vscode)
 		window.addEventListener('message', (event) => {
 			const { command, text } = event.data
 			if (command === 'chatResponse') {
 				// update the output by chunks
 				setPrinterMessage(text)
 			} else if (command === 'chatEnd') {
-				// update session by pushing latest chatbot message
-				// console.log('chatEnd event received')
-				// console.log('session rn', sessionMessages)
 				setPrinterMessage('')
-				setSessionMessages((prevMessages) => [...prevMessages, { content: text, role: 'system' }])
+				setSessionMessages((prevMessages) => [...prevMessages, { content: text, role: 'assisstant' }])
 			}
 		})
 	}, [])
@@ -50,7 +57,7 @@ const App = () => {
 				))}
 
 				{/* bot message that's currently loading in chunks */}
-				<Chat message={printerMessage} role={'system'} />
+				<Chat message={printerMessage} role={'assisstant'} />
 			</div>
 			<Input onSend={handleSend} />
 		</div>
